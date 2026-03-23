@@ -38,44 +38,67 @@ index.ts (command router)
 
 ## Quick Start
 
+### 1. Install
+
 ```bash
-# Clone and install
 git clone https://github.com/jordi-stack/imperium.git
-cd imperium && npm install
+cd imperium
+npm install
+chmod +x imp    # Make shortcut executable
+```
 
-# Configure AI (optional but recommended - free)
+### 2. Try Demo Mode (zero setup needed)
+
+```bash
+./imp --demo portfolio              # Portfolio holdings
+./imp --demo risk scan              # Risk scan (HOLD/WATCH/SELL)
+./imp --demo discover trending base # Trending tokens
+./imp --demo interactive            # Interactive REPL
+```
+
+### 3. Enable AI (free, recommended)
+
+Get a free API key from https://console.groq.com, then:
+
+```bash
 cp .env.example .env
-# Get free API key from https://console.groq.com
-# Edit .env: GROQ_API_KEY=gsk_your_key_here
+echo "GROQ_API_KEY=gsk_your_key_here" >> .env
+```
 
-# Demo mode (no funds needed)
-./imp --demo portfolio
-./imp --demo risk scan
-./imp --demo discover trending base
-./imp --demo analyze          # AI analysis
-./imp --demo ai-rebalance     # AI decides allocation
-./imp --demo interactive      # Interactive REPL
+Now AI commands work:
 
-# Autonomous monitoring
-./imp --demo watch --interval 10
+```bash
+./imp --demo analyze                # AI portfolio analysis
+./imp --demo ai-rebalance           # AI decides allocation
+./imp --demo watch --interval 10    # Autonomous monitoring
+```
 
-# Real mode (live MoonPay data)
+### 4. Connect Real MoonPay Data (optional)
+
+```bash
 npm install -g @moonpay/cli
 moonpay login --email you@example.com
-# Open link in browser, get verification code
+# Browser opens -> complete captcha -> get 6-digit code
 mp verify --email you@example.com --code 123456
-moonpay wallet create --name my-wallet
+moonpay wallet create --name imperium
+```
 
-# Set wallet name in .env
-# MOONPAY_WALLET=my-wallet
+Add wallet to .env:
 
-# Now use without --demo (live data, no funds needed for read-only)
+```bash
+echo "MOONPAY_WALLET=imperium" >> .env
+```
+
+Now use without --demo (live data, no funds needed for read-only):
+
+```bash
+./imp init                          # Create OWS wallet (7 chains)
 ./imp discover trending base        # Live trending tokens
 ./imp discover whales base          # Real smart money wallets
-./imp risk check 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913 base  # Check USDC safety
+./imp risk check 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913 base
+```
 
-# Swap/bridge requires funded wallet (send ETH to your wallet address)
-# ./imp rebalance execute           # Execute swaps via MoonPay CLI
+> Note: `token_swap` and `token_bridge` require a funded wallet. All other commands work without funds.
 
 # Run tests
 npm test
