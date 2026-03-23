@@ -160,7 +160,7 @@ imperium init    # Create OWS HD wallet (7 chains)
 
 ## MoonPay CLI Integration (13 Tools via MCP)
 
-Connected via real MCP protocol using `@modelcontextprotocol/sdk` (stdio transport).
+Connected via real MCP protocol using `@modelcontextprotocol/sdk` (stdio transport). **11/13 tools verified live** against MoonPay CLI. Only `token_swap` and `token_bridge` require a funded wallet.
 
 | # | Tool | Purpose |
 |---|------|---------|
