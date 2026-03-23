@@ -34,7 +34,7 @@ class DemoMcpClient implements McpClient {
 function getDemoRiskProfile(args: Record<string, unknown>): unknown {
   const address = String(args.address ?? args.token ?? "").toLowerCase();
 
-  // Known safe tokens (WETH, USDC) — low risk
+  // Known safe tokens (WETH, USDC)  - low risk
   if (address.includes("4200000000000000000000000000000000000006") ||
       address.includes("833589fcd6edb6e08f4c7c32d4f71b54bda02913")) {
     return {
@@ -46,29 +46,29 @@ function getDemoRiskProfile(args: Record<string, unknown>): unknown {
     };
   }
 
-  // Venice Token (VVV) — medium risk
+  // Venice Token (VVV)  - medium risk
   if (address.includes("acfe6019ed1a7dc6f7b508c02d1b04ec88cc21bf")) {
     return {
       token: { address, name: "Venice Token", symbol: "VVV", chain: "base" },
       holderConcentration: { top10Percent: 42.5 },
       liquidity: { total: 1534379, locked: 320000 },
-      communityNotes: ["High holder concentration — top 10 hold 42%"],
+      communityNotes: ["High holder concentration  - top 10 hold 42%"],
       risks: ["concentrated_supply"],
     };
   }
 
-  // POL on Polygon — higher risk (lower liquidity on that chain)
+  // POL on Polygon  - higher risk (lower liquidity on that chain)
   if (address.includes("0000000000000000000000000000000000001010")) {
     return {
       token: { address, name: "Polygon", symbol: "POL", chain: "polygon" },
       holderConcentration: { top10Percent: 55.3 },
       liquidity: { total: 45000, locked: 5000 },
-      communityNotes: ["Bridged token — verify source chain liquidity"],
+      communityNotes: ["Bridged token  - verify source chain liquidity"],
       risks: ["concentrated_holders", "low_bridge_liquidity"],
     };
   }
 
-  // Unknown tokens — moderate risk default
+  // Unknown tokens  - moderate risk default
   return {
     token: { address, name: "Unknown", symbol: "???", chain: String(args.chain ?? "base") },
     holderConcentration: { top10Percent: 35.0 },

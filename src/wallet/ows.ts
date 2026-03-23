@@ -7,7 +7,7 @@ try {
   owsModule = await import("@open-wallet-standard/core");
   owsAvailable = true;
 } catch {
-  // OWS native binary not available — graceful degradation
+  // OWS native binary not available  - graceful degradation
 }
 
 export function isOWSAvailable(): boolean {

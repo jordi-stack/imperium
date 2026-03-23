@@ -1,8 +1,8 @@
 # ⚔ Imperium
 
-**Multi-Chain Financial Command Center — powered by MoonPay CLI + OpenWallet Standard**
+**Multi-Chain Financial Command Center  - powered by MoonPay CLI + OpenWallet Standard**
 
-> Monitor, protect, and rebalance your crypto portfolio across all chains — from one terminal.
+> Monitor, protect, and rebalance your crypto portfolio across all chains  - from one terminal.
 
 ## Problem
 
@@ -28,7 +28,7 @@ index.ts (command router)
 
 **Key design decisions:**
 - MoonPay CLI connected via **real MCP protocol** (Model Context Protocol) using the official `@modelcontextprotocol/sdk`
-- OWS handles **wallet creation and transaction signing** — keys never leave the vault
+- OWS handles **wallet creation and transaction signing**  - keys never leave the vault
 - Custom **policy engine** gates every transaction (daily limits, per-tx limits, token blocklist, slippage caps)
 - **Demo mode** (`--demo`) uses fixture data so you can try everything without real funds
 
@@ -40,7 +40,7 @@ git clone https://github.com/YOUR_USERNAME/imperium.git
 cd imperium
 npm install
 
-# Try it (demo mode — no crypto needed)
+# Try it (demo mode  - no crypto needed)
 npx tsx src/index.ts --demo portfolio
 npx tsx src/index.ts --demo risk scan
 npx tsx src/index.ts --demo discover trending base
@@ -80,7 +80,7 @@ Risk scoring is **rule-based and transparent**:
 ### Rebalancing
 ```bash
 imperium rebalance target ETH:50 USDC:50  # Set target allocation
-imperium rebalance preview                 # Dry run — see drift + proposed swaps
+imperium rebalance preview                 # Dry run  - see drift + proposed swaps
 imperium rebalance execute                 # Execute swaps (policy-checked)
 ```
 
@@ -112,7 +112,7 @@ imperium init    # Create OWS wallet, save config to ~/.imperium/config.json
 
 ## MoonPay CLI Integration (13 Tools)
 
-Imperium connects to MoonPay CLI via **MCP (Model Context Protocol)** — the same protocol used by Claude Desktop and Claude Code. This is a real stdio transport connection, not shell exec.
+Imperium connects to MoonPay CLI via **MCP (Model Context Protocol)**  - the same protocol used by Claude Desktop and Claude Code. This is a real stdio transport connection, not shell exec.
 
 | # | Tool | What Imperium Does With It |
 |---|------|---------------------------|
@@ -122,7 +122,7 @@ Imperium connects to MoonPay CLI via **MCP (Model Context Protocol)** — the sa
 | 4 | `wallet_activity_list` | Show recent transaction history |
 | 5 | `buy` | Fiat → crypto onramp (checkout URL) |
 | 6 | `deposit_create` | Multi-chain deposit link generation |
-| 7 | `token_check` | Safety scan — rug pull, liquidity, holder analysis |
+| 7 | `token_check` | Safety scan  - rug pull, liquidity, holder analysis |
 | 8 | `token_holder_list` | Whale concentration analysis |
 | 9 | `token_swap` | Execute rebalance swaps |
 | 10 | `token_bridge` | Cross-chain bridges |
@@ -134,10 +134,10 @@ Imperium connects to MoonPay CLI via **MCP (Model Context Protocol)** — the sa
 
 OWS provides the **wallet infrastructure layer**:
 
-1. **Wallet Creation** — `imperium init` creates an HD wallet via OWS `createWallet()`
-2. **Address Derivation** — EVM address derived from wallet, passed to all MoonPay tools
-3. **Policy Attestation** — When you set a spending policy, it's signed with OWS (cryptographic proof the human approved it)
-4. **Transaction Signing** — Every swap/bridge goes through OWS before execution
+1. **Wallet Creation**  - `imperium init` creates an HD wallet via OWS `createWallet()`
+2. **Address Derivation**  - EVM address derived from wallet, passed to all MoonPay tools
+3. **Policy Attestation**  - When you set a spending policy, it's signed with OWS (cryptographic proof the human approved it)
+4. **Transaction Signing**  - Every swap/bridge goes through OWS before execution
 
 The **custom policy engine** is built on top of OWS:
 - Daily spending limits
@@ -167,19 +167,19 @@ npm run test:watch # Watch mode
 ```
 
 Test coverage:
-- `config.test.ts` — Config persistence (3 tests)
-- `mcp-client.test.ts` — MCP client demo mode (5 tests)
-- `policy.test.ts` — Policy engine rules (6 tests)
-- `portfolio.test.ts` — Portfolio calculations (4 tests)
-- `risk.test.ts` — Risk scoring logic (5 tests)
-- `rebalance.test.ts` — Drift calculation and action generation (3 tests)
+- `config.test.ts`  - Config persistence (3 tests)
+- `mcp-client.test.ts`  - MCP client demo mode (5 tests)
+- `policy.test.ts`  - Policy engine rules (6 tests)
+- `portfolio.test.ts`  - Portfolio calculations (4 tests)
+- `risk.test.ts`  - Risk scoring logic (5 tests)
+- `rebalance.test.ts`  - Drift calculation and action generation (3 tests)
 
 ## Known Limitations
 
-1. **Rebalance is single-chain only** — Cross-chain bridges have confirmation delays that complicate atomic rebalancing
-2. **OWS requires native binary** — Supported on macOS and Linux (x64/arm64). Demo mode works everywhere.
-3. **Demo mode uses fixture data** — Real mode requires MoonPay CLI login (`moonpay login`) and a funded wallet
-4. **Risk scoring is rule-based** — Transparent and deterministic, not ML-powered
+1. **Rebalance is single-chain only**  - Cross-chain bridges have confirmation delays that complicate atomic rebalancing
+2. **OWS requires native binary**  - Supported on macOS and Linux (x64/arm64). Demo mode works everywhere.
+3. **Demo mode uses fixture data**  - Real mode requires MoonPay CLI login (`moonpay login`) and a funded wallet
+4. **Risk scoring is rule-based**  - Transparent and deterministic, not ML-powered
 
 ## License
 

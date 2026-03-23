@@ -15,14 +15,14 @@ const program = new Command();
 
 program
   .name("imperium")
-  .description("⚔  Imperium — Multi-Chain Financial Command Center\n\n   Powered by MoonPay CLI (MCP) + OpenWallet Standard")
+  .description("⚔  Imperium  - Multi-Chain Financial Command Center\n\n   Powered by MoonPay CLI (MCP) + OpenWallet Standard")
   .version("1.0.0")
   .option("--demo", "Run in demo mode (fixture data, no real funds needed)");
 
 // === INIT ===
 program
   .command("init")
-  .description("Initialize Imperium — create OWS wallet and config")
+  .description("Initialize Imperium  - create OWS wallet and config")
   .action(async () => {
     display.header("Imperium Init");
     const config = loadConfig();
@@ -77,7 +77,7 @@ portfolio
     const client = createMcpClient(program.opts().demo);
     await client.connect();
     const service = new PortfolioService(client);
-    display.header(`Activity — ${chain}`);
+    display.header(`Activity  - ${chain}`);
     const activities = await service.getActivity(chain);
     display.showActivity(activities);
     await client.disconnect();
@@ -153,7 +153,7 @@ risk
     const client = createMcpClient(program.opts().demo);
     await client.connect();
     const riskService = new RiskService(client);
-    display.header(`Risk Check — ${address.slice(0, 10)}...`);
+    display.header(`Risk Check  - ${address.slice(0, 10)}...`);
     const report = await riskService.checkToken(address, chain);
     display.showRiskReports([report]);
     await client.disconnect();
@@ -256,7 +256,7 @@ discover
     const client = createMcpClient(program.opts().demo);
     await client.connect();
     const service = new DiscoveryService(client);
-    display.header(`Trending — ${chain}`);
+    display.header(`Trending  - ${chain}`);
     const tokens = await service.getTrending(chain);
     display.showTrending(tokens);
     await client.disconnect();
@@ -270,7 +270,7 @@ discover
     const client = createMcpClient(program.opts().demo);
     await client.connect();
     const service = new DiscoveryService(client);
-    display.header(`Smart Money — ${chain}`);
+    display.header(`Smart Money  - ${chain}`);
     const wallets = await service.getSmartMoney(chain);
     display.showSmartMoney(wallets);
     await client.disconnect();

@@ -13,7 +13,7 @@
   "keywords": ["moonpay", "crypto", "portfolio", "agent", "mcp"],
   "author": "Imperium",
   "license": "MIT",
-  "description": "Multi-Chain Financial Command Center — powered by MoonPay CLI + OpenWallet Standard",
+  "description": "Multi-Chain Financial Command Center  - powered by MoonPay CLI + OpenWallet Standard",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.27.1",
     "@open-wallet-standard/core": "^0.3.9",
