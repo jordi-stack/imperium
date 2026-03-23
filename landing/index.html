@@ -625,9 +625,6 @@ async function runCmd(cmd){if(busy)return;cmd=cmd.trim().toLowerCase();if(!cmd)r
 inputEl.addEventListener('keydown',function(e){if(e.key==='Enter'){var c=inputEl.value;if(c){history.unshift(c);histIdx=-1;}runCmd(c);}else if(e.key==='ArrowUp'){e.preventDefault();if(histIdx<history.length-1){histIdx++;inputEl.value=history[histIdx];}}else if(e.key==='ArrowDown'){e.preventDefault();if(histIdx>0){histIdx--;inputEl.value=history[histIdx];}else{histIdx=-1;inputEl.value='';}}else if(e.key==='Tab'){e.preventDefault();var v=inputEl.value.toLowerCase();var m=Object.keys(OUTPUTS).find(function(c){return c.startsWith(v);});if(m)inputEl.value=m;}});
 document.querySelectorAll('.hint-cmd').forEach(function(el){el.addEventListener('click',function(){runCmd(el.getAttribute('data-cmd'));});});
 terminalEl.addEventListener('click',function(){inputEl.focus();});
-setTimeout(function(){runCmd('portfolio');},1500);
-setTimeout(function(){runCmd('risk');},4500);
-setTimeout(function(){runCmd('analyze');},8000);
 </script>
 </body>
 </html>
