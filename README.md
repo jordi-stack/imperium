@@ -59,11 +59,23 @@ cp .env.example .env
 # Autonomous monitoring
 ./imp --demo watch --interval 10
 
-# Real mode (requires MoonPay CLI login)
+# Real mode (live MoonPay data)
 npm install -g @moonpay/cli
 moonpay login --email you@example.com
-./imp discover trending base   # Live data
-./imp risk check 0x4200000000000000000000000000000000000006 base
+# Open link in browser, get verification code
+mp verify --email you@example.com --code 123456
+moonpay wallet create --name my-wallet
+
+# Set wallet name in .env
+# MOONPAY_WALLET=my-wallet
+
+# Now use without --demo (live data, no funds needed for read-only)
+./imp discover trending base        # Live trending tokens
+./imp discover whales base          # Real smart money wallets
+./imp risk check 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913 base  # Check USDC safety
+
+# Swap/bridge requires funded wallet (send ETH to your wallet address)
+# ./imp rebalance execute           # Execute swaps via MoonPay CLI
 
 # Run tests
 npm test
