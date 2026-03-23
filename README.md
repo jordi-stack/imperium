@@ -49,21 +49,21 @@ cp .env.example .env
 # Edit .env: GROQ_API_KEY=gsk_your_key_here
 
 # Demo mode (no funds needed)
-npx tsx src/index.ts --demo portfolio
-npx tsx src/index.ts --demo risk scan
-npx tsx src/index.ts --demo discover trending base
-npx tsx src/index.ts --demo analyze          # AI analysis
-npx tsx src/index.ts --demo ai-rebalance     # AI decides allocation
-npx tsx src/index.ts --demo interactive      # Interactive REPL
+./imp --demo portfolio
+./imp --demo risk scan
+./imp --demo discover trending base
+./imp --demo analyze          # AI analysis
+./imp --demo ai-rebalance     # AI decides allocation
+./imp --demo interactive      # Interactive REPL
 
 # Autonomous monitoring
-npx tsx src/index.ts --demo watch --interval 10
+./imp --demo watch --interval 10
 
 # Real mode (requires MoonPay CLI login)
 npm install -g @moonpay/cli
 moonpay login --email you@example.com
-npx tsx src/index.ts discover trending base   # Live data
-npx tsx src/index.ts risk check 0x4200000000000000000000000000000000000006 base
+./imp discover trending base   # Live data
+./imp risk check 0x4200000000000000000000000000000000000006 base
 
 # Run tests
 npm test
@@ -73,17 +73,17 @@ npm test
 
 ### Portfolio
 ```bash
-imperium portfolio              # Holdings + allocation table
-imperium portfolio pnl          # Profit & loss breakdown
-imperium portfolio activity base # Recent transactions
-imperium portfolio buy ETH      # Fiat onramp (checkout URL)
-imperium portfolio deposit      # Create multi-chain deposit link
+./imp portfolio              # Holdings + allocation table
+./imp portfolio pnl          # Profit & loss breakdown
+./imp portfolio activity base # Recent transactions
+./imp portfolio buy ETH      # Fiat onramp (checkout URL)
+./imp portfolio deposit      # Create multi-chain deposit link
 ```
 
 ### Risk Analysis
 ```bash
-imperium risk scan              # Scan ALL holdings for risks
-imperium risk check 0xABC base  # Check a specific token
+./imp risk scan              # Scan ALL holdings for risks
+./imp risk check 0xABC base  # Check a specific token
 ```
 
 Risk scoring is rule-based and transparent:
@@ -94,8 +94,8 @@ Risk scoring is rule-based and transparent:
 
 ### AI-Powered Commands (requires GROQ_API_KEY)
 ```bash
-imperium analyze                # AI analyzes portfolio + risk, gives recommendations
-imperium ai-rebalance           # AI decides optimal target allocation
+./imp analyze                # AI analyzes portfolio + risk, gives recommendations
+./imp ai-rebalance           # AI decides optimal target allocation
 ```
 
 The AI advisor:
@@ -106,8 +106,8 @@ The AI advisor:
 
 ### Autonomous Watch Mode
 ```bash
-imperium watch --interval 60    # Monitor every 60 seconds
-imperium watch --interval 10    # Faster monitoring (10s)
+./imp watch --interval 60    # Monitor every 60 seconds
+./imp watch --interval 10    # Faster monitoring (10s)
 ```
 
 Watch mode is a **fully autonomous agent loop**:
@@ -121,41 +121,41 @@ Watch mode is a **fully autonomous agent loop**:
 
 ### Rebalancing
 ```bash
-imperium rebalance target ETH:50 USDC:50  # Set target manually
-imperium rebalance preview                 # Preview drift + proposed actions
-imperium rebalance execute                 # Execute swaps (policy-checked)
+./imp rebalance target ETH:50 USDC:50  # Set target manually
+./imp rebalance preview                 # Preview drift + proposed actions
+./imp rebalance execute                 # Execute swaps (policy-checked)
 ```
 
 Or let AI decide:
 ```bash
-imperium ai-rebalance           # AI sets optimal targets based on risk
-imperium rebalance execute      # Execute AI-recommended targets
+./imp ai-rebalance           # AI sets optimal targets based on risk
+./imp rebalance execute      # Execute AI-recommended targets
 ```
 
 ### Discovery
 ```bash
-imperium discover trending base   # Trending tokens on chain
-imperium discover whales base     # Smart money wallets (top PnL)
-imperium discover search "pepe"   # Search tokens
+./imp discover trending base   # Trending tokens on chain
+./imp discover whales base     # Smart money wallets (top PnL)
+./imp discover search "pepe"   # Search tokens
 ```
 
 ### Policy Management
 ```bash
-imperium policy show
-imperium policy set --daily-limit 500 --tx-limit 200 --max-slippage 2
-imperium policy set --block SCAM,RUG
-imperium policy set --approve ETH,USDC,WBTC
+./imp policy show
+./imp policy set --daily-limit 500 --tx-limit 200 --max-slippage 2
+./imp policy set --block SCAM,RUG
+./imp policy set --approve ETH,USDC,WBTC
 ```
 
 ### Interactive REPL
 ```bash
-imperium interactive             # Live shell with all commands
-imperium --demo interactive      # Demo mode REPL
+./imp interactive             # Live shell with all commands
+./imp --demo interactive      # Demo mode REPL
 ```
 
 ### Initialization
 ```bash
-imperium init    # Create OWS HD wallet (7 chains)
+./imp init    # Create OWS HD wallet (7 chains)
 ```
 
 ## MoonPay CLI Integration (13 Tools via MCP)
@@ -190,7 +190,7 @@ This separation ensures the policy-signing key (OWS) is never exposed to the exe
 Real HD wallet creation via OWS (7 chains):
 
 ```
-imperium init
+./imp init
   eip155:1    0x626ffe49082354d6fdaa2fE0174fEa5d13ece395
   solana      B3NpS4M2XiUTtrVmmbJGMjwcPshaxTM4HSAyMNRzic8o
   bitcoin     bc1qsuufhre7zy5wk2cc4q9398lfvtetraxxvgu2cp
@@ -218,7 +218,7 @@ Imperium uses **Groq Llama 3.3 70B** for real AI decision-making:
 
 ```bash
 # Example AI output:
-$ imperium analyze
+$ ./imp analyze
 
 Portfolio Health Assessment:
 The portfolio is moderately diversified, but compromised by high-risk
