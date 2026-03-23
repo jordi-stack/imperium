@@ -5,106 +5,379 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Imperium - Multi-Chain Financial Command Center</title>
 <meta name="description" content="Monitor, protect, and rebalance your crypto portfolio across all chains. Powered by MoonPay CLI + OpenWallet Standard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root { --bg: #0a0a0f; --surface: #12121a; --terminal-bg: #0d1117; --border: #1e1e2e; --text: #c9d1d9; --dim: #6e7681; --green: #6ee7b7; --red: #f87171; --yellow: #fbbf24; --blue: #60a5fa; --cyan: #22d3ee; --magenta: #c084fc; }
+  :root {
+    --bg: #09090b;
+    --surface: #18181b;
+    --surface-2: #1f1f23;
+    --terminal-bg: #0c0c0f;
+    --border: #27272a;
+    --border-light: #3f3f46;
+    --text: #e4e4e7;
+    --text-secondary: #a1a1aa;
+    --dim: #71717a;
+    --green: #34d399;
+    --green-dim: #064e3b;
+    --red: #f87171;
+    --yellow: #fbbf24;
+    --blue: #60a5fa;
+    --cyan: #22d3ee;
+    --magenta: #a78bfa;
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-  .mono { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; }
-  .container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 880px; margin: 0 auto; padding: 0 2rem; }
   a { color: var(--blue); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
-  /* Hero */
-  .hero { text-align: center; padding: 4rem 0 2rem; }
-  .hero h1 { font-size: 3rem; color: var(--green); letter-spacing: 6px; font-weight: 800; }
-  .hero .tagline { font-size: 1.2rem; color: var(--text); margin: 0.75rem 0; }
-  .hero .sub { color: var(--dim); font-size: 0.9rem; margin-bottom: 1.5rem; }
-  .badges { margin: 1rem 0 1.5rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 0.4rem; }
-  .badge { display: inline-block; padding: 0.3rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+  /* ---- HERO ---- */
+  .hero {
+    text-align: center;
+    padding: 5rem 0 3rem;
+    background: linear-gradient(180deg, #0f1a15 0%, var(--bg) 100%);
+  }
+  .hero h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 3.2rem;
+    color: var(--green);
+    letter-spacing: 8px;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+  .hero .tagline {
+    font-size: 1.25rem;
+    color: var(--text);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .hero .sub {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    max-width: 520px;
+    margin: 0 auto 2rem;
+  }
+  .badges {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .badge {
+    padding: 0.35rem 0.9rem;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
   .b-green { background: #064e3b; color: var(--green); }
-  .b-blue { background: #1e3a5f; color: var(--blue); }
-  .b-yellow { background: #451a03; color: var(--yellow); }
+  .b-blue { background: #172554; color: var(--blue); }
+  .b-yellow { background: #422006; color: var(--yellow); }
   .b-magenta { background: #2e1065; color: var(--magenta); }
-  .cta { display: inline-block; padding: 0.7rem 2rem; background: var(--green); color: #000; border-radius: 6px; font-weight: 700; font-size: 0.95rem; margin: 0 0.5rem; transition: opacity 0.2s; }
-  .cta:hover { opacity: 0.85; text-decoration: none; }
-  .cta-outline { background: transparent; border: 1px solid var(--green); color: var(--green); }
+  .cta-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  .cta-primary { background: var(--green); color: #000; }
+  .cta-primary:hover { opacity: 0.9; text-decoration: none; }
+  .cta-outline { background: transparent; border: 1px solid var(--border-light); color: var(--text); }
+  .cta-outline:hover { border-color: var(--green); color: var(--green); text-decoration: none; }
 
-  /* Sections */
-  section { padding: 3rem 0; }
-  section h2 { font-size: 1.5rem; color: var(--green); margin-bottom: 1rem; }
-  section h2 .dim { color: var(--dim); font-weight: 400; font-size: 0.9rem; }
+  /* ---- SECTIONS ---- */
+  section { padding: 4rem 0; }
+  section h2 {
+    font-size: 1.35rem;
+    color: var(--text);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  section h2 span.accent { color: var(--green); }
+  section .section-sub {
+    color: var(--dim);
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+  }
   .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
-  /* Problem / Solution */
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
-  .col-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
-  .col-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
-  .col-card p { color: var(--dim); font-size: 0.9rem; }
+  /* ---- PROBLEM / SOLUTION ---- */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .col-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+  }
+  .col-card h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+  }
+  .col-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
 
-  /* Stats */
-  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
-  @media (max-width: 640px) { .grid4 { grid-template-columns: repeat(2, 1fr); } }
-  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; text-align: center; }
-  .stat-card .num { font-size: 2.2rem; font-weight: 800; color: var(--green); }
-  .stat-card .lbl { font-size: 0.75rem; color: var(--dim); margin-top: 0.25rem; }
+  /* ---- STATS ---- */
+  .grid4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .stat-card .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--green);
+    line-height: 1;
+  }
+  .stat-card .lbl {
+    font-size: 0.75rem;
+    color: var(--dim);
+    margin-top: 0.5rem;
+    line-height: 1.4;
+  }
 
-  /* Architecture */
-  .arch { background: var(--terminal-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8rem; line-height: 1.7; color: var(--dim); white-space: pre; overflow-x: auto; }
+  /* ---- ARCHITECTURE ---- */
+  .arch {
+    background: var(--terminal-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.8;
+    color: var(--dim);
+    white-space: pre;
+    overflow-x: auto;
+  }
   .arch .hl { color: var(--cyan); }
   .arch .gr { color: var(--green); }
   .arch .yl { color: var(--yellow); }
   .arch .mg { color: var(--magenta); }
 
-  /* Features */
-  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-  @media (max-width: 640px) { .grid3 { grid-template-columns: 1fr; } }
-  .feat { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
-  .feat h4 { color: var(--cyan); font-size: 0.85rem; margin-bottom: 0.3rem; }
-  .feat p { color: var(--dim); font-size: 0.8rem; margin: 0; }
+  /* ---- FEATURES ---- */
+  .grid3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .feat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .feat h4 {
+    color: var(--green);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .feat p {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    margin: 0;
+    line-height: 1.6;
+  }
 
-  /* Tools table */
-  .tools-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-  .tools-table th { text-align: left; padding: 0.5rem; color: var(--green); border-bottom: 1px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
-  .tools-table td { padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border); }
-  .tools-table td:first-child { font-family: 'SF Mono', monospace; color: var(--cyan); font-size: 0.75rem; }
-  .tools-table td:nth-child(2) { color: var(--dim); }
+  /* ---- TOOLS TABLE ---- */
+  .tools-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .tools-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+  .tools-table thead {
+    background: var(--surface-2);
+  }
+  .tools-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    color: var(--dim);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+  .tools-table td {
+    padding: 0.6rem 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .tools-table td:first-child {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--cyan);
+    font-size: 0.75rem;
+  }
+  .tools-table td:nth-child(3) {
+    color: var(--dim);
+    font-size: 0.78rem;
+  }
+  .tools-table tbody tr:hover {
+    background: var(--surface-2);
+  }
 
-  /* Terminal */
+  /* ---- TERMINAL ---- */
   .terminal-wrapper { margin: 1rem 0; }
-  .terminal-bar { background: #161b22; border: 1px solid var(--border); border-bottom: none; border-radius: 8px 8px 0 0; padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .terminal-bar {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
   .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
-  .dot-r { background: #ff5f57; } .dot-y { background: #febc2e; } .dot-g { background: #28c840; }
-  .terminal-title { color: var(--dim); font-size: 0.75rem; margin-left: 0.5rem; font-family: monospace; }
-  .terminal { background: var(--terminal-bg); border: 1px solid var(--border); border-radius: 0 0 8px 8px; padding: 1rem; height: 480px; overflow-y: auto; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8rem; line-height: 1.6; cursor: text; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+  .terminal-title {
+    color: var(--dim);
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .terminal {
+    background: var(--terminal-bg);
+    border: 1px solid var(--border);
+    border-radius: 0 0 12px 12px;
+    padding: 1.25rem;
+    height: 460px;
+    overflow-y: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    cursor: text;
+  }
   .terminal::-webkit-scrollbar { width: 6px; }
+  .terminal::-webkit-scrollbar-track { background: transparent; }
   .terminal::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   .input-line { display: flex; align-items: center; }
-  .prompt { color: var(--cyan); margin-right: 0.5rem; white-space: pre; }
-  #input { background: none; border: none; color: #fff; font-family: inherit; font-size: inherit; outline: none; flex: 1; caret-color: var(--green); }
-  .hint { color: var(--dim); font-size: 0.8rem; text-align: center; margin: 0.5rem 0; }
-  .hint-cmd { color: var(--cyan); cursor: pointer; font-family: monospace; }
-  .hint-cmd:hover { text-decoration: underline; }
+  .prompt { color: var(--green); margin-right: 0.5rem; white-space: pre; font-weight: 500; }
+  #input {
+    background: none;
+    border: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    flex: 1;
+    caret-color: var(--green);
+  }
+  .hint {
+    color: var(--dim);
+    font-size: 0.8rem;
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+  .hint-cmd {
+    color: var(--cyan);
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.4rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: all 0.15s;
+  }
+  .hint-cmd:hover { border-color: var(--cyan); background: var(--surface-2); }
 
-  /* Quick start */
-  .code-block { background: var(--terminal-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; font-family: 'SF Mono', monospace; font-size: 0.8rem; line-height: 1.8; overflow-x: auto; }
+  /* ---- CODE BLOCK ---- */
+  .code-block {
+    background: var(--terminal-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 2;
+    overflow-x: auto;
+  }
   .code-block .cm { color: var(--dim); }
   .code-block .pr { color: var(--green); }
   .code-block .cmd { color: #fff; }
 
-  /* Footer */
-  footer { text-align: center; padding: 2rem 0; color: var(--dim); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 1rem; }
-  footer a { margin: 0 0.75rem; }
+  /* ---- FOOTER ---- */
+  footer {
+    text-align: center;
+    padding: 3rem 0;
+    color: var(--dim);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  footer .links { margin-top: 0.75rem; }
+  footer .links a {
+    color: var(--text-secondary);
+    margin: 0 1rem;
+    font-size: 0.8rem;
+  }
+  footer .links a:hover { color: var(--green); }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; letter-spacing: 4px; }
+    .hero .tagline { font-size: 1rem; }
+    .two-col { grid-template-columns: 1fr; }
+    .grid4 { grid-template-columns: repeat(2, 1fr); }
+    .grid3 { grid-template-columns: 1fr; }
+    .container { padding: 0 1.25rem; }
+    section { padding: 3rem 0; }
+    .arch { font-size: 0.65rem; padding: 1rem; }
+    .terminal { height: 380px; }
+  }
 </style>
 </head>
 <body>
 
 <!-- HERO -->
-<div class="container">
 <div class="hero">
+<div class="container">
   <h1>IMPERIUM</h1>
   <p class="tagline">Multi-Chain Financial Command Center</p>
-  <p class="sub">Monitor, protect, and rebalance your crypto portfolio across all chains. One tool.</p>
+  <p class="sub">Monitor, protect, and rebalance your crypto portfolio across all chains in one place. Powered by MoonPay CLI and OpenWallet Standard.</p>
   <div class="badges">
     <span class="badge b-green">13 MoonPay Tools</span>
     <span class="badge b-blue">Real MCP Protocol</span>
@@ -112,82 +385,95 @@
     <span class="badge b-yellow">31 Tests</span>
     <span class="badge b-magenta">The Synthesis Hackathon</span>
   </div>
-  <div style="margin-top: 1.5rem;">
-    <a href="https://github.com/jordi-stack/imperium" class="cta">View on GitHub</a>
-    <a href="#demo" class="cta cta-outline">Try Demo</a>
+  <div class="cta-row">
+    <a href="https://github.com/jordi-stack/imperium" class="cta cta-primary">View on GitHub</a>
+    <a href="#demo" class="cta cta-outline">Try Interactive Demo</a>
   </div>
 </div>
 </div>
 
-<hr class="divider">
-
 <!-- PROBLEM / SOLUTION -->
-<section class="container">
+<section>
+<div class="container">
   <div class="two-col">
     <div class="col-card">
       <h3 style="color: var(--red);">The Problem</h3>
-      <p>Crypto portfolios are fragmented across Ethereum, Base, Polygon, Arbitrum with no unified view. You can't detect rug pulls, can't see total allocation, and rebalancing means hours of manual swaps across different UIs.</p>
+      <p>Crypto portfolios are scattered across Ethereum, Base, Polygon, and Arbitrum with no unified view. You can't detect rug pulls, can't see total allocation, and rebalancing means hours of manual swaps across different UIs and bridge interfaces.</p>
     </div>
     <div class="col-card">
       <h3 style="color: var(--green);">The Solution</h3>
-      <p>Imperium gives you one command center for everything: portfolio tracking, risk scoring, smart money discovery, and policy-gated rebalancing - all powered by MoonPay CLI via real MCP protocol.</p>
+      <p>One command center for everything: portfolio tracking, risk scoring with HOLD/WATCH/SELL recommendations, smart money discovery, trending analysis, and policy-gated rebalancing with cross-chain bridge detection.</p>
     </div>
   </div>
+</div>
 </section>
 
 <hr class="divider">
 
 <!-- STATS -->
-<section class="container">
-  <h2>At a Glance</h2>
+<section>
+<div class="container">
+  <h2><span class="accent">At a Glance</span></h2>
+  <p class="section-sub">Built with real integrations, not stubs or mocks</p>
   <div class="grid4">
-    <div class="stat-card"><div class="num">13</div><div class="lbl">MoonPay CLI Tools</div></div>
-    <div class="stat-card"><div class="num">7</div><div class="lbl">Chains Supported</div></div>
-    <div class="stat-card"><div class="num">31</div><div class="lbl">Tests Passing</div></div>
-    <div class="stat-card"><div class="num">4</div><div class="lbl">Core Modules</div></div>
+    <div class="stat-card"><div class="num">13</div><div class="lbl">MoonPay CLI<br>Tools</div></div>
+    <div class="stat-card"><div class="num">7</div><div class="lbl">Chains<br>Supported</div></div>
+    <div class="stat-card"><div class="num">31</div><div class="lbl">Tests<br>Passing</div></div>
+    <div class="stat-card"><div class="num">4</div><div class="lbl">Core<br>Modules</div></div>
   </div>
+</div>
 </section>
 
 <hr class="divider">
 
 <!-- ARCHITECTURE -->
-<section class="container">
-  <h2>Architecture</h2>
+<section>
+<div class="container">
+  <h2><span class="accent">Architecture</span></h2>
+  <p class="section-sub">Clean separation of concerns with MCP client at the core</p>
   <div class="arch"><span class="hl">User (CLI / Interactive REPL)</span>
     |
     v
 <span class="hl">index.ts</span> (command router)
     |
     +---> <span class="gr">core/portfolio.ts</span>  ---+
-    +---> <span class="yl">core/risk.ts</span>       ---+                  +--> <span class="mg">MoonPay CLI</span> (MCP)
+    +---> <span class="yl">core/risk.ts</span>       ---+                  +--> <span class="mg">MoonPay CLI</span> (MCP stdio)
     +---> <span class="yl">core/rebalance.ts</span>  ---+-- policy gate ---+
-    +---> <span class="gr">core/discovery.ts</span>  ---+  (wallet/policy) +--> <span class="mg">OWS Wallet</span> (sign)
+    +---> <span class="gr">core/discovery.ts</span>  ---+  (wallet/policy) +--> <span class="mg">OWS Wallet</span> (sign/verify)
                                     |
-                              <span class="hl">~/.imperium/config.json</span> (persistent state)</div>
+                              <span class="hl">~/.imperium/config.json</span></div>
+</div>
 </section>
 
 <hr class="divider">
 
 <!-- FEATURES -->
-<section class="container">
-  <h2>Core Modules</h2>
+<section>
+<div class="container">
+  <h2><span class="accent">Core Modules</span></h2>
+  <p class="section-sub">Four modules covering the full portfolio lifecycle</p>
   <div class="grid3">
-    <div class="feat"><h4>Portfolio</h4><p>Holdings across chains, allocation %, PnL tracking, transaction history, fiat onramp</p></div>
-    <div class="feat"><h4>Risk Scanner</h4><p>Token safety check: holder concentration, liquidity analysis, community warnings. Scores 0-100 with HOLD/WATCH/SELL</p></div>
-    <div class="feat"><h4>Rebalance</h4><p>Set target allocation, preview drift, auto-generate swap/bridge actions. Policy-gated execution with OWS signing</p></div>
-    <div class="feat"><h4>Discovery</h4><p>Trending tokens, smart money wallets (top PnL), token search. Real data from MoonPay</p></div>
-    <div class="feat"><h4>Policy Engine</h4><p>Daily spending limits, per-tx caps, token blocklists, slippage guards. OWS-signed attestation</p></div>
-    <div class="feat"><h4>OWS Wallet</h4><p>Real HD wallet creation via OpenWallet Standard. 7 chains: EVM, Solana, Bitcoin, Cosmos, Tron, TON, Filecoin</p></div>
+    <div class="feat"><h4>Portfolio</h4><p>Holdings across chains, allocation percentages, PnL tracking, transaction history, fiat onramp via MoonPay</p></div>
+    <div class="feat"><h4>Risk Scanner</h4><p>Token safety analysis: holder concentration, liquidity depth, community warnings. Scores 0-100 with HOLD / WATCH / SELL</p></div>
+    <div class="feat"><h4>Rebalance</h4><p>Set target allocation, preview drift, auto-generate swap and bridge actions. Policy-gated execution with OWS signing</p></div>
+    <div class="feat"><h4>Discovery</h4><p>Trending tokens per chain, smart money wallets ranked by PnL, token search. All real data from MoonPay</p></div>
+    <div class="feat"><h4>Policy Engine</h4><p>Daily spending limits, per-transaction caps, token blocklists, max slippage guards. OWS-signed attestation for audit</p></div>
+    <div class="feat"><h4>OWS Wallet</h4><p>Real HD wallet via OpenWallet Standard. 7 chains: EVM, Solana, Bitcoin, Cosmos, Tron, TON, Filecoin</p></div>
   </div>
+</div>
 </section>
 
 <hr class="divider">
 
-<!-- MOONPAY TOOLS -->
-<section class="container">
-  <h2>13 MoonPay CLI Tools <span class="dim">via real MCP protocol</span></h2>
+<!-- TOOLS TABLE -->
+<section>
+<div class="container">
+  <h2><span class="accent">13 MoonPay CLI Tools</span></h2>
+  <p class="section-sub">Connected via real MCP protocol using @modelcontextprotocol/sdk</p>
+  <div class="tools-wrap">
   <table class="tools-table">
-    <tr><th>#</th><th>Tool</th><th>Module</th><th>Purpose</th></tr>
+    <thead><tr><th>#</th><th>Tool</th><th>Module</th><th>Purpose</th></tr></thead>
+    <tbody>
     <tr><td>1</td><td>token_balance_list</td><td>Portfolio</td><td>All holdings + USD value</td></tr>
     <tr><td>2</td><td>token_retrieve</td><td>Portfolio</td><td>Detailed token market data</td></tr>
     <tr><td>3</td><td>wallet_pnl_retrieve</td><td>Portfolio</td><td>Profit & loss summary</td></tr>
@@ -196,20 +482,36 @@
     <tr><td>6</td><td>deposit_create</td><td>Portfolio</td><td>Multi-chain deposit link</td></tr>
     <tr><td>7</td><td>token_check</td><td>Risk</td><td>Safety scan (rug pull, liquidity)</td></tr>
     <tr><td>8</td><td>token_holder_list</td><td>Risk</td><td>Holder concentration analysis</td></tr>
-    <tr><td>9</td><td>token_swap</td><td>Rebalance</td><td>Swap tokens (same chain)</td></tr>
-    <tr><td>10</td><td>token_bridge</td><td>Rebalance</td><td>Bridge tokens (cross-chain)</td></tr>
+    <tr><td>9</td><td>token_swap</td><td>Rebalance</td><td>Swap tokens on same chain</td></tr>
+    <tr><td>10</td><td>token_bridge</td><td>Rebalance</td><td>Bridge tokens cross-chain</td></tr>
     <tr><td>11</td><td>token_trending_list</td><td>Discovery</td><td>Trending tokens per chain</td></tr>
     <tr><td>12</td><td>wallet_discover</td><td>Discovery</td><td>Smart money wallets by PnL</td></tr>
     <tr><td>13</td><td>token_search</td><td>Discovery</td><td>Search tokens by name/symbol</td></tr>
+    </tbody>
   </table>
+  </div>
+</div>
 </section>
 
 <hr class="divider">
 
 <!-- INTERACTIVE DEMO -->
-<section class="container" id="demo">
-  <h2>Interactive Demo <span class="dim">try it yourself</span></h2>
-  <p class="hint">Type a command or click: <span class="hint-cmd" data-cmd="help">help</span> | <span class="hint-cmd" data-cmd="portfolio">portfolio</span> | <span class="hint-cmd" data-cmd="risk">risk</span> | <span class="hint-cmd" data-cmd="trending">trending</span> | <span class="hint-cmd" data-cmd="whales">whales</span> | <span class="hint-cmd" data-cmd="rebalance">rebalance</span> | <span class="hint-cmd" data-cmd="execute">execute</span> | <span class="hint-cmd" data-cmd="init">init</span></p>
+<section id="demo">
+<div class="container">
+  <h2><span class="accent">Interactive Demo</span></h2>
+  <p class="section-sub">Try Imperium right here. Type a command or click one below.</p>
+  <p class="hint">
+    <span class="hint-cmd" data-cmd="help">help</span>
+    <span class="hint-cmd" data-cmd="portfolio">portfolio</span>
+    <span class="hint-cmd" data-cmd="pnl">pnl</span>
+    <span class="hint-cmd" data-cmd="risk">risk</span>
+    <span class="hint-cmd" data-cmd="trending">trending</span>
+    <span class="hint-cmd" data-cmd="whales">whales</span>
+    <span class="hint-cmd" data-cmd="rebalance">rebalance</span>
+    <span class="hint-cmd" data-cmd="execute">execute</span>
+    <span class="hint-cmd" data-cmd="policy">policy</span>
+    <span class="hint-cmd" data-cmd="init">init</span>
+  </p>
 
   <div class="terminal-wrapper">
     <div class="terminal-bar">
@@ -224,195 +526,78 @@
       </div>
     </div>
   </div>
+</div>
 </section>
 
 <hr class="divider">
 
 <!-- TECH STACK -->
-<section class="container">
-  <h2>Tech Stack</h2>
+<section>
+<div class="container">
+  <h2><span class="accent">Tech Stack</span></h2>
+  <p class="section-sub">Production-grade tools, no toy frameworks</p>
   <div class="grid3">
-    <div class="feat"><h4>MCP Client</h4><p>@modelcontextprotocol/sdk - official SDK, real stdio transport to MoonPay CLI</p></div>
-    <div class="feat"><h4>Wallet</h4><p>@open-wallet-standard/core - real HD wallet, NAPI-RS native binary, 7 chains</p></div>
-    <div class="feat"><h4>Testing</h4><p>Vitest - 31 tests across 7 files (unit, integration, policy, rebalance)</p></div>
-    <div class="feat"><h4>Language</h4><p>TypeScript (strict mode) with ESM modules</p></div>
-    <div class="feat"><h4>CLI</h4><p>Commander.js + chalk + cli-table3 for rich terminal output</p></div>
-    <div class="feat"><h4>Data</h4><p>14 fixture files captured from real MoonPay API responses</p></div>
+    <div class="feat"><h4>MCP Client</h4><p>@modelcontextprotocol/sdk with stdio transport to MoonPay CLI process</p></div>
+    <div class="feat"><h4>OWS Wallet</h4><p>@open-wallet-standard/core, NAPI-RS native binary, real HD wallet creation</p></div>
+    <div class="feat"><h4>Testing</h4><p>Vitest with 31 tests across 7 files including integration and policy tests</p></div>
+    <div class="feat"><h4>TypeScript</h4><p>Strict mode with ESM modules and clean type definitions</p></div>
+    <div class="feat"><h4>CLI Framework</h4><p>Commander.js + chalk + cli-table3 for rich, colored terminal output</p></div>
+    <div class="feat"><h4>Fixture Data</h4><p>14 JSON files captured from real MoonPay API responses for demo mode</p></div>
   </div>
+</div>
 </section>
 
 <hr class="divider">
 
 <!-- QUICK START -->
-<section class="container">
-  <h2>Quick Start</h2>
+<section>
+<div class="container">
+  <h2><span class="accent">Quick Start</span></h2>
+  <p class="section-sub">Up and running in under a minute</p>
   <div class="code-block">
 <span class="cm"># Clone and install</span>
 <span class="pr">$</span> <span class="cmd">git clone https://github.com/jordi-stack/imperium.git</span>
 <span class="pr">$</span> <span class="cmd">cd imperium && npm install</span>
 
-<span class="cm"># Demo mode (no funds needed)</span>
+<span class="cm"># Demo mode (no funds needed, no login required)</span>
 <span class="pr">$</span> <span class="cmd">npx tsx src/index.ts --demo portfolio</span>
 <span class="pr">$</span> <span class="cmd">npx tsx src/index.ts --demo risk scan</span>
 <span class="pr">$</span> <span class="cmd">npx tsx src/index.ts --demo discover trending base</span>
 <span class="pr">$</span> <span class="cmd">npx tsx src/index.ts --demo interactive</span>
 
-<span class="cm"># Real mode (requires MoonPay CLI login)</span>
+<span class="cm"># Real mode (live MoonPay data)</span>
 <span class="pr">$</span> <span class="cmd">npm install -g @moonpay/cli</span>
 <span class="pr">$</span> <span class="cmd">moonpay login --email you@example.com</span>
 <span class="pr">$</span> <span class="cmd">npx tsx src/index.ts discover trending base</span>
   </div>
+</div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <p>Built for <strong>The Synthesis</strong> Hackathon by Jordi Alter + Claude Opus 4.6</p>
-  <p style="margin-top: 0.5rem;">
+  <p>Built for <strong>The Synthesis</strong> Hackathon</p>
+  <p style="color: var(--text-secondary); margin-top: 0.25rem;">Jordi Alter + Claude Opus 4.6</p>
+  <div class="links">
     <a href="https://github.com/jordi-stack/imperium">GitHub</a>
     <a href="https://basescan.org/tx/0x39c3cc890d55aad0fcbf923bbe1713230798f871185f337cf620cbd78d2d0a24">On-Chain Identity</a>
-  </p>
+  </div>
 </footer>
 
 <script>
-var outputEl = document.getElementById('output');
-var inputEl = document.getElementById('input');
-var terminalEl = document.getElementById('terminal');
-var history = [];
-var histIdx = -1;
-var busy = false;
-
-var OUTPUTS = {
-help: [
-  {t:'', s:'bold cyan'}, {t:'  Available commands:', s:'bold cyan'}, {t:''},
-  {t:'  portfolio      Show holdings & allocation', s:''},
-  {t:'  pnl            Profit & loss summary', s:''},
-  {t:'  activity       Recent transactions', s:''},
-  {t:'  risk           Scan all holdings for risks', s:''},
-  {t:'  trending       Trending tokens on Base', s:''},
-  {t:'  whales         Smart money wallets', s:''},
-  {t:'  rebalance      Preview rebalance actions', s:''},
-  {t:'  execute        Execute rebalance (policy-gated)', s:''},
-  {t:'  policy         Show spending policy', s:''},
-  {t:'  init           Initialize OWS wallet', s:''},
-  {t:'  clear          Clear screen', s:''},
-],
-portfolio: [
-  {t:'', s:''}, {t:'  Portfolio', s:'bold cyan'}, {t:'  '+'-'.repeat(56), s:'dim'},
-  {t:'  Token   Chain     Value       Allocation', s:'dim'},
-  {t:'  WETH    base      $2,560.91   31.3%', s:''},
-  {t:'  USDC    base      $1,850.00   22.6%', s:''},
-  {t:'  VVV     base      $2,497.65   30.5%', s:''},
-  {t:'  POL     polygon   $1,280.00   15.6%', s:''},
-  {t:'  '+'-'.repeat(56), s:'dim'},
-  {t:'  Total: $8,188.56', s:'bold'},
-],
-pnl: [
-  {t:'', s:''}, {t:'  Profit & Loss', s:'bold cyan'}, {t:'  '+'-'.repeat(56), s:'dim'},
-  {t:'  Portfolio Value: $8,188.56', s:'bold'},
-  {t:'  Total PnL:      $1,245.30 (17.9%)', s:'green'},
-  {t:''}, {t:'  Token   PnL         PnL %', s:'dim'},
-  {t:'  WETH    $680.20     21.6%', s:'green'},
-  {t:'  USDC    $0.00       0.0%', s:'dim'},
-  {t:'  VVV     $565.10     29.3%', s:'green'},
-  {t:'  POL     -$120.00    -8.6%', s:'red'},
-],
-activity: [
-  {t:'', s:''}, {t:'  Activity - base', s:'bold cyan'}, {t:'  '+'-'.repeat(56), s:'dim'},
-  {t:'  Type      Description       Amount    Time              Tx', s:'dim'},
-  {t:'  swap      WETH -> USDC      0.5       2026-03-22 10:30  0x8a3f..', s:'yellow'},
-  {t:'  receive   Received WETH     1.0       2026-03-21 15:00  0x1a2b..', s:'green'},
-  {t:'  bridge    USDC Base->Poly   500       2026-03-20 08:45  0x2b3c..', s:'magenta'},
-],
-risk: [
-  {t:'', s:''}, {t:'  Risk Scan', s:'bold cyan'}, {t:'  '+'-'.repeat(56), s:'dim'},
-  {t:'  Token   Chain     Risk     Flags                                    Action', s:'dim'},
-  {t:'  WETH    base      0/100    none                                     HOLD', s:'green'},
-  {t:'  USDC    base      0/100    none                                     HOLD', s:'green'},
-  {t:'  VVV     base      40/100   moderately_concentrated, warnings        WATCH', s:'yellow'},
-  {t:'  POL     polygon   75/100   concentrated_holders, moderate_liquidity SELL', s:'red'},
-],
-trending: [
-  {t:'', s:''}, {t:'  Trending - base', s:'bold cyan'}, {t:'  '+'-'.repeat(56), s:'dim'},
-  {t:'  Token    Price       24h Change   Volume   Liquidity', s:'dim'},
-  {t:'  VVV      $5.94       -0.04%       $2.7M    $1.5M', s:'red'},
-  {t:'  THQ      $0.0271     +0.7%        $0.9M    $0.5M', s:'green'},
-  {t:'  ZORA     $0.0157     -4.6%        $0.3M    $0.1M', s:'red'},
-  {t:'  MORPHO   $1.67       -4.6%        $0.4M    $0.7M', s:'red'},
-  {t:'  SYND     $0.0550     +46.0%       $0.6M    $0.1M', s:'green'},
-],
-whales: [
-  {t:'', s:''}, {t:'  Smart Money - base', s:'bold cyan'}, {t:'  '+'-'.repeat(56), s:'dim'},
-  {t:'  Address         PnL (30d)       Win Rate   Swaps   Labels', s:'dim'},
-  {t:'  0x9ec1...589a   $2,545,824.96   48.6%      736     smart trader', s:'green'},
-  {t:'  0x4444...a148   $1,485,000.50   38.8%      454     smart trader', s:'green'},
-  {t:'  0x25dd...15d9   $1,426,434.92   41.3%      358     smart trader', s:'green'},
-],
-rebalance: [
-  {t:'', s:''}, {t:'  Set Target: ETH 50% / USDC 50%', s:'bold cyan'},
-  {t:'  + Target set.', s:'green'},
-  {t:''}, {t:'  Rebalance Preview', s:'bold cyan'}, {t:'  '+'-'.repeat(56), s:'dim'},
-  {t:'  Token   Current   Target   Drift', s:'dim'},
-  {t:'  ETH     31.3%     50.0%    -18.7%', s:'red'},
-  {t:'  USDC    22.6%     50.0%    -27.4%', s:'red'},
-  {t:'  VVV     30.5%     0.0%     +30.5%', s:'red'},
-  {t:'  POL     15.6%     0.0%     +15.6%', s:'red'},
-  {t:''}, {t:'  Proposed Actions', s:'bold cyan'}, {t:'  '+'-'.repeat(56), s:'dim'},
-  {t:'  SWAP   $2,498 VVV -> USDC on base', s:'yellow'},
-  {t:'    VVV overweight by 30.5%, swapping $2,498 to USDC', s:'dim'},
-  {t:'  BRIDGE $1,280 POL -> ETH polygon -> base', s:'magenta'},
-  {t:'    POL overweight by 15.6%, bridging $1,280 to ETH on base', s:'dim'},
-],
-execute: [
-  {t:'', s:''}, {t:'  Rebalance Execute', s:'bold cyan'}, {t:'  '+'-'.repeat(56), s:'dim'},
-  {t:'  Executing 2 action(s)...', s:''},
-  {t:'  [policy] Daily limit: $2,498 / $5,000 ... APPROVED', s:'dim'},
-  {t:'  [policy] Per-tx limit: $2,498 / $4,000 ... APPROVED', s:'dim'},
-  {t:'  + Swapped VVV -> USDC | tx: 0xa1b2c3d4e5f6...', s:'green'},
-  {t:'  [policy] Daily limit: $3,778 / $5,000 ... APPROVED', s:'dim'},
-  {t:'  [policy] Per-tx limit: $1,280 / $4,000 ... APPROVED', s:'dim'},
-  {t:'  + Bridged POL -> ETH (polygon -> base) | tx: 0xf7e8d9c0b1a2...', s:'green'},
-],
-policy: [
-  {t:'', s:''}, {t:'  Spending Policy', s:'bold cyan'}, {t:'  '+'-'.repeat(56), s:'dim'},
-  {t:'  Daily Limit:      $5,000', s:''},
-  {t:'  Per-Tx Limit:     $4,000', s:''},
-  {t:'  Max Slippage:     2%', s:''},
-  {t:'  Require Preview:  true', s:''},
-  {t:'  Approved Tokens:  any', s:''},
-  {t:'  Blocked Tokens:   none', s:''},
-  {t:'  Attestation:      0x7a8b9c...signed via OWS', s:'dim'},
-],
-init: [
-  {t:'', s:''}, {t:'  Imperium Init', s:'bold cyan'}, {t:'  '+'-'.repeat(56), s:'dim'},
-  {t:'  OWS Available: yes', s:'green'},
-  {t:'  Creating HD wallet via OpenWallet Standard...', s:''},
-  {t:'    eip155:1    0x626ffe49082354d6fdaa2fE0174fEa5d13ece395', s:'dim'},
-  {t:'    solana      B3NpS4M2XiUTtrVmmbJGMjwcPshaxTM4HSAyMNRzic8o', s:'dim'},
-  {t:'    bitcoin     bc1qsuufhre7zy5wk2cc4q9398lfvtetraxxvgu2cp', s:'dim'},
-  {t:'    cosmos      cosmos17dxe8y9cm83f8qxagnlyhdsnw2lhrd6kh0qatr', s:'dim'},
-  {t:'    tron        TNRFrdgkvZBdMLDyfNrc3PvwM7Dr4a8ZDy', s:'dim'},
-  {t:'    ton         UQDNHuxNR4XTprtscDTLiAWOSLAE1ykN...', s:'dim'},
-  {t:'    filecoin    f1ioptesd67642qg6wtrz75iqwq6zsamanzpxjq6a', s:'dim'},
-  {t:'  + Wallet created! Address: 0x626ffe490823...', s:'green'},
-  {t:'  + Config saved to ~/.imperium/config.json', s:'green'},
-],
-};
-
-var COLORS = {green:'#6ee7b7',red:'#f87171',yellow:'#fbbf24',blue:'#60a5fa',cyan:'#22d3ee',magenta:'#c084fc',dim:'#6e7681',bold:null,'bold cyan':'#22d3ee'};
-
+var outputEl=document.getElementById('output'),inputEl=document.getElementById('input'),terminalEl=document.getElementById('terminal'),history=[],histIdx=-1,busy=false;
+var OUTPUTS={help:[{t:'',s:''},{t:'  Available commands:',s:'bold cyan'},{t:''},{t:'  portfolio      Show holdings & allocation',s:''},{t:'  pnl            Profit & loss summary',s:''},{t:'  activity       Recent transactions',s:''},{t:'  risk           Scan all holdings for risks',s:''},{t:'  trending       Trending tokens on Base',s:''},{t:'  whales         Smart money wallets',s:''},{t:'  rebalance      Preview rebalance actions',s:''},{t:'  execute        Execute rebalance (policy-gated)',s:''},{t:'  policy         Show spending policy',s:''},{t:'  init           Initialize OWS wallet',s:''},{t:'  clear          Clear screen',s:''}],portfolio:[{t:'',s:''},{t:'  Portfolio',s:'bold cyan'},{t:'  '+'-'.repeat(56),s:'dim'},{t:'  Token   Chain     Value       Allocation',s:'dim'},{t:'  WETH    base      $2,560.91   31.3%',s:''},{t:'  USDC    base      $1,850.00   22.6%',s:''},{t:'  VVV     base      $2,497.65   30.5%',s:''},{t:'  POL     polygon   $1,280.00   15.6%',s:''},{t:'  '+'-'.repeat(56),s:'dim'},{t:'  Total: $8,188.56',s:'bold'}],pnl:[{t:'',s:''},{t:'  Profit & Loss',s:'bold cyan'},{t:'  '+'-'.repeat(56),s:'dim'},{t:'  Portfolio Value: $8,188.56',s:'bold'},{t:'  Total PnL:      $1,245.30 (17.9%)',s:'green'},{t:''},{t:'  Token   PnL         PnL %',s:'dim'},{t:'  WETH    $680.20     21.6%',s:'green'},{t:'  USDC    $0.00       0.0%',s:'dim'},{t:'  VVV     $565.10     29.3%',s:'green'},{t:'  POL     -$120.00    -8.6%',s:'red'}],activity:[{t:'',s:''},{t:'  Activity - base',s:'bold cyan'},{t:'  '+'-'.repeat(56),s:'dim'},{t:'  Type      Description       Amount    Time              Tx',s:'dim'},{t:'  swap      WETH -> USDC      0.5       2026-03-22 10:30  0x8a3f..',s:'yellow'},{t:'  receive   Received WETH     1.0       2026-03-21 15:00  0x1a2b..',s:'green'},{t:'  bridge    USDC Base->Poly   500       2026-03-20 08:45  0x2b3c..',s:'magenta'}],risk:[{t:'',s:''},{t:'  Risk Scan',s:'bold cyan'},{t:'  '+'-'.repeat(56),s:'dim'},{t:'  Token   Chain     Risk     Flags                                    Action',s:'dim'},{t:'  WETH    base      0/100    none                                     HOLD',s:'green'},{t:'  USDC    base      0/100    none                                     HOLD',s:'green'},{t:'  VVV     base      40/100   moderately_concentrated, warnings        WATCH',s:'yellow'},{t:'  POL     polygon   75/100   concentrated_holders, moderate_liquidity SELL',s:'red'}],trending:[{t:'',s:''},{t:'  Trending - base',s:'bold cyan'},{t:'  '+'-'.repeat(56),s:'dim'},{t:'  Token    Price       24h Change   Volume   Liquidity',s:'dim'},{t:'  VVV      $5.94       -0.04%       $2.7M    $1.5M',s:'red'},{t:'  THQ      $0.0271     +0.7%        $0.9M    $0.5M',s:'green'},{t:'  ZORA     $0.0157     -4.6%        $0.3M    $0.1M',s:'red'},{t:'  MORPHO   $1.67       -4.6%        $0.4M    $0.7M',s:'red'},{t:'  SYND     $0.0550     +46.0%       $0.6M    $0.1M',s:'green'}],whales:[{t:'',s:''},{t:'  Smart Money - base',s:'bold cyan'},{t:'  '+'-'.repeat(56),s:'dim'},{t:'  Address         PnL (30d)       Win Rate   Swaps   Labels',s:'dim'},{t:'  0x9ec1...589a   $2,545,824.96   48.6%      736     smart trader',s:'green'},{t:'  0x4444...a148   $1,485,000.50   38.8%      454     smart trader',s:'green'},{t:'  0x25dd...15d9   $1,426,434.92   41.3%      358     smart trader',s:'green'}],rebalance:[{t:'',s:''},{t:'  Set Target: ETH 50% / USDC 50%',s:'bold cyan'},{t:'  + Target set.',s:'green'},{t:''},{t:'  Rebalance Preview',s:'bold cyan'},{t:'  '+'-'.repeat(56),s:'dim'},{t:'  Token   Current   Target   Drift',s:'dim'},{t:'  ETH     31.3%     50.0%    -18.7%',s:'red'},{t:'  USDC    22.6%     50.0%    -27.4%',s:'red'},{t:'  VVV     30.5%     0.0%     +30.5%',s:'red'},{t:'  POL     15.6%     0.0%     +15.6%',s:'red'},{t:''},{t:'  Proposed Actions',s:'bold cyan'},{t:'  '+'-'.repeat(56),s:'dim'},{t:'  SWAP   $2,498 VVV -> USDC on base',s:'yellow'},{t:'    VVV overweight by 30.5%, swapping $2,498 to USDC',s:'dim'},{t:'  BRIDGE $1,280 POL -> ETH polygon -> base',s:'magenta'},{t:'    POL overweight by 15.6%, bridging $1,280 to ETH on base',s:'dim'}],execute:[{t:'',s:''},{t:'  Rebalance Execute',s:'bold cyan'},{t:'  '+'-'.repeat(56),s:'dim'},{t:'  Executing 2 action(s)...',s:''},{t:'  [policy] Daily limit: $2,498 / $5,000 ... APPROVED',s:'dim'},{t:'  [policy] Per-tx limit: $2,498 / $4,000 ... APPROVED',s:'dim'},{t:'  + Swapped VVV -> USDC | tx: 0xa1b2c3d4e5f6...',s:'green'},{t:'  [policy] Daily limit: $3,778 / $5,000 ... APPROVED',s:'dim'},{t:'  [policy] Per-tx limit: $1,280 / $4,000 ... APPROVED',s:'dim'},{t:'  + Bridged POL -> ETH (polygon -> base) | tx: 0xf7e8d9c0b1a2...',s:'green'}],policy:[{t:'',s:''},{t:'  Spending Policy',s:'bold cyan'},{t:'  '+'-'.repeat(56),s:'dim'},{t:'  Daily Limit:      $5,000',s:''},{t:'  Per-Tx Limit:     $4,000',s:''},{t:'  Max Slippage:     2%',s:''},{t:'  Require Preview:  true',s:''},{t:'  Approved Tokens:  any',s:''},{t:'  Blocked Tokens:   none',s:''},{t:'  Attestation:      0x7a8b9c...signed via OWS',s:'dim'}],init:[{t:'',s:''},{t:'  Imperium Init',s:'bold cyan'},{t:'  '+'-'.repeat(56),s:'dim'},{t:'  OWS Available: yes',s:'green'},{t:'  Creating HD wallet via OpenWallet Standard...',s:''},{t:'    eip155:1    0x626ffe49082354d6fdaa2fE0174fEa5d13ece395',s:'dim'},{t:'    solana      B3NpS4M2XiUTtrVmmbJGMjwcPshaxTM4HSAyMNRzic8o',s:'dim'},{t:'    bitcoin     bc1qsuufhre7zy5wk2cc4q9398lfvtetraxxvgu2cp',s:'dim'},{t:'    cosmos      cosmos17dxe8y9cm83f8qxagnlyhdsnw2lhrd6kh0qatr',s:'dim'},{t:'    tron        TNRFrdgkvZBdMLDyfNrc3PvwM7Dr4a8ZDy',s:'dim'},{t:'    ton         UQDNHuxNR4XTprtscDTLiAWOSLAE1ykN...',s:'dim'},{t:'    filecoin    f1ioptesd67642qg6wtrz75iqwq6zsamanzpxjq6a',s:'dim'},{t:'  + Wallet created! Address: 0x626ffe490823...',s:'green'},{t:'  + Config saved to ~/.imperium/config.json',s:'green'}]};
+var COLORS={green:'#34d399',red:'#f87171',yellow:'#fbbf24',blue:'#60a5fa',cyan:'#22d3ee',magenta:'#a78bfa',dim:'#71717a',bold:null,'bold cyan':'#22d3ee'};
 function createLine(t,s){var e=document.createElement('div');e.style.whiteSpace='pre';e.textContent=t;if(s){var c=COLORS[s];if(c)e.style.color=c;if(s.indexOf('bold')!==-1)e.style.fontWeight='bold';}return e;}
-function addPrompt(c){var e=document.createElement('div');e.style.whiteSpace='pre';var p=document.createElement('span');p.textContent='imperium> ';p.style.color=COLORS.cyan;var s=document.createElement('span');s.textContent=c;s.style.color='#fff';s.style.fontWeight='bold';e.appendChild(p);e.appendChild(s);outputEl.appendChild(e);}
+function addPrompt(c){var e=document.createElement('div');e.style.whiteSpace='pre';var p=document.createElement('span');p.textContent='imperium> ';p.style.color=COLORS.green;p.style.fontWeight='500';var s=document.createElement('span');s.textContent=c;s.style.color='#fff';s.style.fontWeight='bold';e.appendChild(p);e.appendChild(s);outputEl.appendChild(e);}
 function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
-async function typeLines(lines){for(var i=0;i<lines.length;i++){var el=createLine(lines[i].t,lines[i].s);el.style.opacity='0';outputEl.appendChild(el);await sleep(35);el.style.opacity='1';terminalEl.scrollTop=terminalEl.scrollHeight;}}
+async function typeLines(lines){for(var i=0;i<lines.length;i++){var el=createLine(lines[i].t,lines[i].s);el.style.opacity='0';outputEl.appendChild(el);await sleep(30);el.style.opacity='1';terminalEl.scrollTop=terminalEl.scrollHeight;}}
 async function runCmd(cmd){if(busy)return;cmd=cmd.trim().toLowerCase();if(!cmd)return;busy=true;inputEl.disabled=true;if(cmd==='clear'){outputEl.replaceChildren();busy=false;inputEl.disabled=false;inputEl.value='';inputEl.focus();return;}addPrompt(cmd);var lines=OUTPUTS[cmd];if(lines){await typeLines(lines);}else{outputEl.appendChild(createLine("  Unknown: '"+cmd+"'. Type 'help'.",'dim'));}outputEl.appendChild(document.createElement('div'));terminalEl.scrollTop=terminalEl.scrollHeight;busy=false;inputEl.disabled=false;inputEl.value='';inputEl.focus();}
-
-(function(){outputEl.appendChild(createLine('  IMPERIUM v1.0 - Multi-Chain Financial Command Center','bold cyan'));outputEl.appendChild(createLine('  Mode: demo (fixture data from real MoonPay API)','dim'));outputEl.appendChild(createLine("  Type 'help' for commands",'dim'));outputEl.appendChild(document.createElement('div'));})();
-
+(function(){outputEl.appendChild(createLine('  IMPERIUM v1.0 - Multi-Chain Financial Command Center','bold cyan'));outputEl.appendChild(createLine('  Mode: demo (fixture data from real MoonPay API)','dim'));outputEl.appendChild(createLine("  Type 'help' for commands or click buttons above",'dim'));outputEl.appendChild(document.createElement('div'));})();
 inputEl.addEventListener('keydown',function(e){if(e.key==='Enter'){var c=inputEl.value;if(c){history.unshift(c);histIdx=-1;}runCmd(c);}else if(e.key==='ArrowUp'){e.preventDefault();if(histIdx<history.length-1){histIdx++;inputEl.value=history[histIdx];}}else if(e.key==='ArrowDown'){e.preventDefault();if(histIdx>0){histIdx--;inputEl.value=history[histIdx];}else{histIdx=-1;inputEl.value='';}}else if(e.key==='Tab'){e.preventDefault();var v=inputEl.value.toLowerCase();var m=Object.keys(OUTPUTS).find(function(c){return c.startsWith(v);});if(m)inputEl.value=m;}});
 document.querySelectorAll('.hint-cmd').forEach(function(el){el.addEventListener('click',function(){runCmd(el.getAttribute('data-cmd'));});});
 terminalEl.addEventListener('click',function(){inputEl.focus();});
-setTimeout(function(){runCmd('portfolio');},2000);
-setTimeout(function(){runCmd('risk');},5000);
+setTimeout(function(){runCmd('portfolio');},1500);
+setTimeout(function(){runCmd('risk');},4500);
 </script>
 </body>
 </html>
